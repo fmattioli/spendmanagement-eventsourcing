@@ -5,7 +5,7 @@ namespace Spents.EventSourcing.CrossCuting.Extensions
 {
     public static class LogExtension
     {
-        public static IServiceCollection AddSerilogServices(this IServiceCollection services)
+        public static IServiceCollection AddLoggingDependency(this IServiceCollection services)
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Verbose()

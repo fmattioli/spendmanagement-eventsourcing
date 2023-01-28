@@ -3,12 +3,10 @@ using KafkaFlow.Configuration;
 using KafkaFlow.Serializer;
 using KafkaFlow.TypedHandler;
 using Microsoft.Extensions.DependencyInjection;
-
 using Spents.EventSourcing.Kafka.Core.Handlers;
 using Spents.EventSourcing.Kafka.Core.KafkaBus;
 using Spents.EventSourcing.Kafka.Core.Middlewares;
 using Spents.EventSourcing.CrossCuting.Models;
-using Spents.Topics;
 
 namespace Spents.EventSourcing.CrossCuting.Extensions
 {
@@ -20,7 +18,6 @@ namespace Spents.EventSourcing.CrossCuting.Extensions
                 .UseConsoleLog()
                 .AddCluster(cluster => cluster
                     .AddBrokers(kafkaSettings)
-                    .AddTelemetry()
                     .AddConsumers(kafkaSettings)
                     )
                 );
@@ -28,17 +25,6 @@ namespace Spents.EventSourcing.CrossCuting.Extensions
             services.AddHostedService<KafkaBusHostedService>();
             return services;
         }
-
-        private static IClusterConfigurationBuilder AddTelemetry(
-           this IClusterConfigurationBuilder builder)
-        {
-            builder
-                .EnableAdminMessages(KafkaTopics.Events.Receipt)
-                .EnableTelemetry(KafkaTopics.Events.Receipt);
-
-            return builder;
-        }
-
 
         private static IClusterConfigurationBuilder AddBrokers(
             this IClusterConfigurationBuilder builder,
@@ -89,7 +75,7 @@ namespace Spents.EventSourcing.CrossCuting.Extensions
                                     .AddHandler<ReceiptCreatedEventHandler>()
                                     )
                             )
-                     ) ;
+                     );
 
             return builder;
         }
