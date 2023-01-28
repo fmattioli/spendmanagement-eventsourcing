@@ -1,0 +1,19 @@
+﻿using Microsoft.Extensions.DependencyInjection;
+using Serilog;
+
+namespace Spents.EventSourcing.CrossCuting.Extensions
+{
+    public static class LogExtension
+    {
+        public static IServiceCollection AddSerilogServices(this IServiceCollection services)
+        {
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Verbose()
+                .WriteTo.Console()
+                .CreateLogger();
+
+            AppDomain.CurrentDomain.ProcessExit += (s, e) => Log.CloseAndFlush();
+            return services.AddSingleton(Log.Logger);
+        }
+    }
+}
