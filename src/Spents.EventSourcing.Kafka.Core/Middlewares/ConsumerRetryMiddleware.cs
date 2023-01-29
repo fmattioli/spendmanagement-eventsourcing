@@ -45,7 +45,7 @@
                                 PartitionKey = GetPartitionKey(context),
                                 Headers = ToJsonString(context.Headers),
                                 RetryAttempt = retryAttempt,
-                                Message = ex.Message
+                                ex.Message
                             });
                     })
                 .ExecuteAsync(() => next(context));
@@ -53,7 +53,7 @@
 
 
 
-        private string GetPartitionKey(IMessageContext context)
+        private static string GetPartitionKey(IMessageContext context)
         {
             if (context.Message.Key is string keyString)
             {
@@ -75,8 +75,7 @@
             return "Invalid message key";
         }
 
-        //TODO: Generate a extension method
-        private string ToJsonString(IMessageHeaders headers)
+        private static string ToJsonString(IMessageHeaders headers)
         {
             var stringifiedHeaders = headers
                 .GroupBy(g => g.Key)

@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spents.EventSourcing.API", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spents.EventSourcing.Kafka.Core", "Spents.EventSourcing.Kafka.Core\Spents.EventSourcing.Kafka.Core.csproj", "{FED8BF3E-D485-42CF-BF00-F9F0FC206837}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spents.EventSourcing.Domain", "Spents.EventSourcing.Domain\Spents.EventSourcing.Domain.csproj", "{51DA2CC4-E3B0-4A77-8EC1-A3BBF7F9258B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spents.EventSourcing.Infra.Data", "Spents.EventSourcing.Infra.Data\Spents.EventSourcing.Infra.Data.csproj", "{A8C455BD-DE75-4E12-97A4-F56FA250DB76}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{FED8BF3E-D485-42CF-BF00-F9F0FC206837}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FED8BF3E-D485-42CF-BF00-F9F0FC206837}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FED8BF3E-D485-42CF-BF00-F9F0FC206837}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51DA2CC4-E3B0-4A77-8EC1-A3BBF7F9258B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51DA2CC4-E3B0-4A77-8EC1-A3BBF7F9258B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51DA2CC4-E3B0-4A77-8EC1-A3BBF7F9258B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51DA2CC4-E3B0-4A77-8EC1-A3BBF7F9258B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8C455BD-DE75-4E12-97A4-F56FA250DB76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8C455BD-DE75-4E12-97A4-F56FA250DB76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8C455BD-DE75-4E12-97A4-F56FA250DB76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8C455BD-DE75-4E12-97A4-F56FA250DB76}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

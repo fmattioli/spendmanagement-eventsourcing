@@ -75,7 +75,7 @@ namespace Spents.EventSourcing.Kafka.Core.Middlewares
             }
         }
 
-        private string GetPartitionKey(IMessageContext context)
+        private static string GetPartitionKey(IMessageContext context)
         {
             if (context.Message.Key is string keyString)
             {
@@ -97,7 +97,7 @@ namespace Spents.EventSourcing.Kafka.Core.Middlewares
             return "Invalid message key";
         }
 
-        private string ToJsonString(IMessageHeaders headers)
+        private static string ToJsonString(IMessageHeaders headers)
         {
             var stringifiedHeaders = headers
                 .GroupBy(g => g.Key)

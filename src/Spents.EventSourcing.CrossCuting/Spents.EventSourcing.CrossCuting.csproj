@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Spents.EventSourcing.Infra.Data\Spents.EventSourcing.Infra.Data.csproj" />
     <ProjectReference Include="..\Spents.EventSourcing.Kafka.Core\Spents.EventSourcing.Kafka.Core.csproj" />
   </ItemGroup>
 

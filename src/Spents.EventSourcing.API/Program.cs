@@ -17,6 +17,7 @@ var applicationSettings = builder.Configuration.GetSection("Settings").Get<Setti
 builder.Services
     .AddKafka(applicationSettings.KafkaSettings)
     .AddMongo(applicationSettings.MongoSettings)
+    .AddRepositories()
     .AddLoggingDependency()
     .AddControllers();
 
