@@ -10,8 +10,8 @@ namespace Spents.EventSourcing.Kafka.Core.Handlers
     public class ReceiptCreatedEventHandler : IMessageHandler<ReceiptCreatedEvent>
     {
         private readonly ILogger log;
-        private readonly IReceiptCreatedEventRepository receiptCreatedEventRepository;
-        public ReceiptCreatedEventHandler(ILogger log, IReceiptCreatedEventRepository receiptCreatedEventRepository)
+        private readonly IReceiptEvents receiptCreatedEventRepository;
+        public ReceiptCreatedEventHandler(ILogger log, IReceiptEvents receiptCreatedEventRepository)
         {
             this.log = log;
             this.receiptCreatedEventRepository = receiptCreatedEventRepository;
@@ -19,13 +19,18 @@ namespace Spents.EventSourcing.Kafka.Core.Handlers
 
         public async Task Handle(IMessageContext context, ReceiptCreatedEvent message)
         {
-            var receipCreatedEntity = new ReceiptCreatedEntity
+            var receipCreatedEntity = new ReceiptEventEntity
             {
                 EventName = $"{ message.EventName}-{message.Version}",
                 Id = message.Body.Id,
-                ReceiptDate = message.Body.ReceiptDate,
-                EstablishmentName = message.Body.EstablishmentName,
-                ReceiptItems = message.Body.ReceiptItems.Select(x => new ReceiptItem(x.Name, x.Quantity, x.ItemPrice, x.Observation))
+                Receipt = new Receipt(
+                    message.Body.EstablishmentName, 
+                    message.Body.ReceiptDate, 
+                    message.Body.ReceiptItems
+                    .Select(
+                        x => new ReceiptItem(x.Id, x.Name, x.Quantity, x.ItemPrice, x.Observation)
+                        )
+                    )
             };
 
             await receiptCreatedEventRepository.AddReceiptCreatedEvent(receipCreatedEntity);

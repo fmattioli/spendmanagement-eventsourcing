@@ -14,10 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Spents.EventSourcing.CrossCuting\Spents.EventSourcing.CrossCuting.csproj" />
   </ItemGroup>
 
