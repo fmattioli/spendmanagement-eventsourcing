@@ -39,7 +39,7 @@ namespace Spents.EventSourcing.CrossCuting.Extensions
                         si.SecurityProtocol = KafkaFlow.Configuration.SecurityProtocol.SaslSsl;
                         si.SaslUsername = settings.Sasl_UserName;
                         si.SaslPassword = settings.Sasl_Password;
-                        si.SaslMechanism = KafkaFlow.Configuration.SaslMechanism.ScramSha512;
+                        si.SaslMechanism = KafkaFlow.Configuration.SaslMechanism.Plain;
                         si.SslCaLocation = string.Empty;
                     });
             }
