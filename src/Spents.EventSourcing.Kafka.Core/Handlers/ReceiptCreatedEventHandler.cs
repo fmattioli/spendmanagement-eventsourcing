@@ -1,13 +1,14 @@
 ﻿using KafkaFlow;
 using KafkaFlow.TypedHandler;
 using Serilog;
-using Spents.Events.Events.v1;
+using Spents.Events.v1;
 using Spents.EventSourcing.Domain.Entities;
 using Spents.EventSourcing.Domain.Interfaces;
+using Spents.EventSourcing.Domain.ValueObjects;
 
 namespace Spents.EventSourcing.Kafka.Core.Handlers
 {
-    public class ReceiptCreatedEventHandler : IMessageHandler<ReceiptCreatedEvent>
+    public class ReceiptCreatedEventHandler : IMessageHandler<ReceiptEventCreated>
     {
         private readonly ILogger log;
         private readonly IReceiptEvents receiptCreatedEventRepository;
@@ -17,29 +18,20 @@ namespace Spents.EventSourcing.Kafka.Core.Handlers
             this.receiptCreatedEventRepository = receiptCreatedEventRepository;
         }
 
-        public async Task Handle(IMessageContext context, ReceiptCreatedEvent message)
+        public async Task Handle(IMessageContext context, ReceiptEventCreated message)
         {
-            var receipCreatedEntity = new ReceiptEventEntity
-            {
-                EventName = $"{ message.EventName}-{message.Version}",
-                Id = message.Body.Id,
-                Receipt = new Receipt(
-                    message.Body.EstablishmentName, 
-                    message.Body.ReceiptDate, 
-                    message.Body.ReceiptItems
-                    .Select(
-                        x => new ReceiptItem(x.Id, x.Name, x.Quantity, x.ItemPrice, x.Observation)
-                        )
-                    )
-            };
-
-            await receiptCreatedEventRepository.AddReceiptCreatedEvent(receipCreatedEntity);
+            await receiptCreatedEventRepository.AddReceiptCreatedEvent(
+                new ReceiptEventsEntity
+                {
+                    EventStatus = (ReceiptEventStatus)message.ReceiptStatus,
+                    ReceiptBody = message.Receipt
+                });
 
             this.log.Information(
-                $"Kafka message received.",
+                $"Kafka message received and processed.",
                 () => new
                 {
-                    message.Body
+                    message.Receipt
                 });
         }
     }

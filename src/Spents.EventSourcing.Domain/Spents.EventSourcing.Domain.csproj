@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Spents.Events" Version="1.0.7" />
+    <PackageReference Include="Spents.Domain" Version="1.1.5" />
+    <PackageReference Include="Spents.Events" Version="1.2.6" />
   </ItemGroup>
 
 </Project>

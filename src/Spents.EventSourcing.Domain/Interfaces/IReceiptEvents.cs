@@ -4,7 +4,7 @@ namespace Spents.EventSourcing.Domain.Interfaces
 {
     public interface IReceiptEvents
     {
-        Task<IReadOnlyCollection<ReceiptEventEntity>> GetAllEvents(Guid receiptId);
-        Task AddReceiptCreatedEvent(ReceiptEventEntity receipt);
+        Task<IReadOnlyCollection<ReceiptEventsEntity>> GetAllEvents(Guid receiptId);
+        Task AddReceiptCreatedEvent(ReceiptEventsEntity receipt);
     }
 }
