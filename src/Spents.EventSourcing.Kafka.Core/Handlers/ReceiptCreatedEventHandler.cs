@@ -4,7 +4,6 @@ using Serilog;
 using Spents.Events.v1;
 using Spents.EventSourcing.Domain.Entities;
 using Spents.EventSourcing.Domain.Interfaces;
-using Spents.EventSourcing.Domain.ValueObjects;
 
 namespace Spents.EventSourcing.Kafka.Core.Handlers
 {
@@ -20,19 +19,17 @@ namespace Spents.EventSourcing.Kafka.Core.Handlers
 
         public async Task Handle(IMessageContext context, ReceiptEventCreated message)
         {
-            await receiptCreatedEventRepository.AddReceiptCreatedEvent(
-                new ReceiptEventsEntity
-                {
-                    EventStatus = (ReceiptEventStatus)message.ReceiptStatus,
-                    ReceiptBody = message.Receipt
-                });
+            if (message.Body is not null)
+            {
+                await receiptCreatedEventRepository.AddReceiptCreatedEvent(new ReceiptEventsEntity(message.Body));
 
-            this.log.Information(
-                $"Kafka message received and processed.",
-                () => new
-                {
-                    message.Receipt
-                });
+                this.log.Information(
+                    $"Kafka message received and processed.",
+                    () => new
+                    {
+                        message.Body
+                    });
+            }
         }
     }
 }

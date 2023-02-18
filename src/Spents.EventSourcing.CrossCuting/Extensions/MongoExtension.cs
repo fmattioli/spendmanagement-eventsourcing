@@ -17,12 +17,13 @@ namespace Spents.EventSourcing.CrossCuting.Extensions
             {
                 var configuration = sp.GetService<IConfiguration>();
                 var options = sp.GetService<MongoSettings>();
+                BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
+                BsonDefaults.GuidRepresentationMode = GuidRepresentationMode.V3;
                 return new MongoClient(mongoSettings.ConnectionString);
             });
 
             services.AddSingleton(sp =>
             {
-                BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
                 var mongoClient = sp.GetService<IMongoClient>() ?? throw new Exception("MongoDB was not injectable.");
                 var db = mongoClient.GetDatabase(mongoSettings.Database);
                 return db;

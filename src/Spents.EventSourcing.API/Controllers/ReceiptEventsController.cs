@@ -11,11 +11,11 @@ namespace Spents.EventSourcing.API.Controllers
         public ReceiptEventsController(IReceiptEvents receiptCreatedEventRepository) => this.receiptCreatedEventRepository = receiptCreatedEventRepository;
 
         [HttpGet]
-        [Route("/getReceipts", Name = nameof(ReceiptEventsController.GetAllEvents))]
+        [Route("/getAllReceiptEvents", Name = nameof(ReceiptEventsController.GetAllEvents))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetAllEvents([FromQuery] Guid Id) => Ok(await receiptCreatedEventRepository.GetAllEvents(Id));
+        public async Task<IActionResult> GetAllEvents([FromQuery] Guid receiptId) => Ok(await receiptCreatedEventRepository.GetAllEvents(receiptId));
         
     }
 }

@@ -19,9 +19,8 @@ namespace Spents.EventSourcing.Infra.Data.Persistence
 
         public async Task<IReadOnlyCollection<ReceiptEventsEntity>> GetAllEvents(Guid receiptId)
         {
-            var filter = Builders<ReceiptEventsEntity>.Filter.Eq(x => x.Id, receiptId);
+            var filter = Builders<ReceiptEventsEntity>.Filter.Where(x => x.Id == receiptId);
             return await _receiptCollection.Find(filter).ToListAsync();
-            
         }
     }
 }
