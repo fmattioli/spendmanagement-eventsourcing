@@ -1,13 +1,13 @@
 ﻿using KafkaFlow;
 using KafkaFlow.TypedHandler;
 using Serilog;
+using Spents.Domain.Entities;
 using Spents.Events.v1;
-using Spents.EventSourcing.Domain.Entities;
 using Spents.EventSourcing.Domain.Interfaces;
 
 namespace Spents.EventSourcing.Kafka.Core.Handlers
 {
-    public class ReceiptCreatedEventHandler : IMessageHandler<ReceiptEventCreated>
+    public class ReceiptCreatedEventHandler : IMessageHandler<ReceiptEvent<Receipt>>
     {
         private readonly ILogger log;
         private readonly IReceiptEvents receiptCreatedEventRepository;
@@ -17,17 +17,17 @@ namespace Spents.EventSourcing.Kafka.Core.Handlers
             this.receiptCreatedEventRepository = receiptCreatedEventRepository;
         }
 
-        public async Task Handle(IMessageContext context, ReceiptEventCreated message)
+        public async Task Handle(IMessageContext context, ReceiptEvent<Receipt> message)
         {
-            if (message.Body is not null)
+            if (message is not null)
             {
-                await receiptCreatedEventRepository.AddReceiptCreatedEvent(new ReceiptEventsEntity(message.Body));
+                await receiptCreatedEventRepository.AddReceiptCreatedEvent(message);
 
                 this.log.Information(
                     $"Kafka message received and processed.",
                     () => new
                     {
-                        message.Body
+                        message
                     });
             }
         }

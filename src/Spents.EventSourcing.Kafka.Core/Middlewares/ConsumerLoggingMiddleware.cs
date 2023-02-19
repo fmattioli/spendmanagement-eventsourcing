@@ -1,10 +1,8 @@
 ﻿using KafkaFlow;
 using Newtonsoft.Json;
-
 using Serilog;
-
+using Spents.EventSourcing.Kafka.Core.Extensions;
 using System.Diagnostics;
-using System.Text;
 
 namespace Spents.EventSourcing.Kafka.Core.Middlewares
 {
@@ -28,8 +26,8 @@ namespace Spents.EventSourcing.Kafka.Core.Middlewares
                     context.ConsumerContext.GroupId,
                     context.ConsumerContext.Topic,
                     PartitionNumber = context.ConsumerContext.Partition,
-                    PartitionKey = GetPartitionKey(context),
-                    Headers = ToJsonString(context.Headers),
+                    PartitionKey = context.GetPartitionKey(),
+                    Headers = context.Headers.ToJsonString(),
                     MessageType = context.Message.Value.GetType().FullName,
                     Message = JsonConvert.SerializeObject(context.Message)
                 });
@@ -46,9 +44,9 @@ namespace Spents.EventSourcing.Kafka.Core.Middlewares
                         context.ConsumerContext.GroupId,
                         context.ConsumerContext.Topic,
                         PartitionNumber = context.ConsumerContext.Partition,
-                        PartitionKey = GetPartitionKey(context),
+                        PartitionKey = context.GetPartitionKey(),
                         context.ConsumerContext.Offset,
-                        Headers = ToJsonString(context.Headers),
+                        Headers = context.Headers.ToJsonString(),
                         MessageType = context.Message.Value.GetType().FullName,
                         Message = JsonConvert.SerializeObject(context.Message),
                         ProcessingTime = sw.ElapsedMilliseconds
@@ -65,47 +63,14 @@ namespace Spents.EventSourcing.Kafka.Core.Middlewares
                         context.ConsumerContext.GroupId,
                         context.ConsumerContext.Topic,
                         PartitionNumber = context.ConsumerContext.Partition,
-                        PartitionKey = GetPartitionKey(context),
+                        PartitionKey = context.GetPartitionKey(),
                         context.ConsumerContext.Offset,
-                        Headers = ToJsonString(context.Headers),
+                        Headers = context.Headers.ToJsonString(),
                         MessageType = context.Message.Value.GetType().FullName,
                         Message = JsonConvert.SerializeObject(context.Message),
                         ProcessingTime = sw.ElapsedMilliseconds
                     });
             }
-        }
-
-        private static string GetPartitionKey(IMessageContext context)
-        {
-            if (context.Message.Key is string keyString)
-            {
-                return keyString;
-            }
-
-            if (context.Message.Key is byte[] keyBytes)
-            {
-                try
-                {
-                    return Encoding.UTF8.GetString(keyBytes);
-                }
-                catch (DecoderFallbackException)
-                {
-                    return Convert.ToBase64String(keyBytes);
-                }
-            }
-
-            return "Invalid message key";
-        }
-
-        private static string ToJsonString(IMessageHeaders headers)
-        {
-            var stringifiedHeaders = headers
-                .GroupBy(g => g.Key)
-                .ToDictionary(
-                    kv => kv.Key,
-                    kv => Encoding.UTF8.GetString(kv.FirstOrDefault().Value));
-
-            return JsonConvert.SerializeObject(stringifiedHeaders);
         }
     }
 }

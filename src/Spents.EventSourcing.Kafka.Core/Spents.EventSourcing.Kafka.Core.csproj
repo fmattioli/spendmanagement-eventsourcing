@@ -16,7 +16,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="Polly" Version="7.2.3" />
     <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
-    <PackageReference Include="Spents.Events" Version="1.3.5" />
   </ItemGroup>
 
   <ItemGroup>
