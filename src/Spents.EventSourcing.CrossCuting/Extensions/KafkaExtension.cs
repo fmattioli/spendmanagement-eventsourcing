@@ -7,23 +7,39 @@ using Spents.EventSourcing.Kafka.Core.Handlers;
 using Spents.EventSourcing.Kafka.Core.KafkaBus;
 using Spents.EventSourcing.Kafka.Core.Middlewares;
 using Spents.EventSourcing.CrossCuting.Models;
+using Spents.Topics;
+using Microsoft.AspNetCore.Builder;
+using KafkaFlow.Admin.Dashboard;
 
 namespace Spents.EventSourcing.CrossCuting.Extensions
 {
     public static class KafkaExtension
     {
+        public static IApplicationBuilder ShowKafkaDashboard(this IApplicationBuilder app) => app.UseKafkaFlowDashboard();
+
         public static IServiceCollection AddKafka(this IServiceCollection services, KafkaSettings kafkaSettings)
         {
             services.AddKafka(kafka => kafka
                 .UseConsoleLog()
                 .AddCluster(cluster => cluster
                     .AddBrokers(kafkaSettings)
+                    .AddTelemetry()
                     .AddConsumers(kafkaSettings)
                     )
                 );
 
             services.AddHostedService<KafkaBusHostedService>();
             return services;
+        }
+
+        private static IClusterConfigurationBuilder AddTelemetry(
+            this IClusterConfigurationBuilder builder)
+        {
+            builder
+                .EnableAdminMessages(KafkaTopics.Events.ReceiptTelemetry)
+                .EnableTelemetry(KafkaTopics.Events.ReceiptTelemetry);
+
+            return builder;
         }
 
         private static IClusterConfigurationBuilder AddBrokers(
@@ -57,12 +73,12 @@ namespace Spents.EventSourcing.CrossCuting.Extensions
         {
             builder.AddConsumer(
                 consumer => consumer
-                     .Topic(Spents.Topics.KafkaTopics.Events.Receipt)
+                     .Topics(Spents.Topics.KafkaTopics.Events.Receipt)
                      .WithGroupId("ReceiptEvents")
+                     .WithName("Receipt-Events")
                      .WithBufferSize(settings.BufferSize)
                      .WithWorkersCount(settings.WorkerCount)
                      .WithAutoOffsetReset(KafkaFlow.AutoOffsetReset.Latest)
-                     .WithInitialState((ConsumerInitialState)Enum.Parse(typeof(ConsumerInitialState), settings.ConsumerInitialState))
                      .AddMiddlewares(
                         middlewares =>
                             middlewares

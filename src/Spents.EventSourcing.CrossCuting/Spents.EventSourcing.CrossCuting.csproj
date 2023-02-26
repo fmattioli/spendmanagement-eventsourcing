@@ -18,7 +18,7 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
     <PackageReference Include="MongoDB.Driver" Version="2.19.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
-    <PackageReference Include="Spents.Topics" Version="1.0.0" />
+    <PackageReference Include="Spents.Topics" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>
