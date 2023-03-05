@@ -1,13 +1,11 @@
 ﻿namespace Spents.EventSourcing.Kafka.Core.Middlewares
 {
-    using System;
-    using System.Text;
-    using System.Threading.Tasks;
     using KafkaFlow;
-    using Newtonsoft.Json;
     using Polly;
-
     using Serilog;
+    using Spents.EventSourcing.Kafka.Core.Extensions;
+    using System;
+    using System.Threading.Tasks;
 
     public sealed class ConsumerRetryMiddleware : IMessageMiddleware
     {
@@ -42,48 +40,13 @@
                                 context.ConsumerContext.Topic,
                                 context.ConsumerContext.Offset,
                                 PartitionNumber = context.ConsumerContext.Partition,
-                                PartitionKey = GetPartitionKey(context),
-                                Headers = ToJsonString(context.Headers),
+                                PartitionKey = context.GetPartitionKey(),
+                                Headers = context.Headers.ToJsonString(),
                                 RetryAttempt = retryAttempt,
                                 ex.Message
                             });
                     })
                 .ExecuteAsync(() => next(context));
-        }
-
-
-
-        private static string GetPartitionKey(IMessageContext context)
-        {
-            if (context.Message.Key is string keyString)
-            {
-                return keyString;
-            }
-
-            if (context.Message.Key is byte[] keyBytes)
-            {
-                try
-                {
-                    return Encoding.UTF8.GetString(keyBytes);
-                }
-                catch (DecoderFallbackException)
-                {
-                    return Convert.ToBase64String(keyBytes);
-                }
-            }
-
-            return "Invalid message key";
-        }
-
-        private static string ToJsonString(IMessageHeaders headers)
-        {
-            var stringifiedHeaders = headers
-                .GroupBy(g => g.Key)
-                .ToDictionary(
-                    kv => kv.Key,
-                    kv => Encoding.UTF8.GetString(kv.FirstOrDefault().Value));
-
-            return JsonConvert.SerializeObject(stringifiedHeaders);
         }
     }
 }

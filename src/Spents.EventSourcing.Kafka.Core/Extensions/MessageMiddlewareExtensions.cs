@@ -1,7 +1,5 @@
 ﻿using KafkaFlow;
-
 using Newtonsoft.Json;
-
 using System.Text;
 
 namespace Spents.EventSourcing.Kafka.Core.Extensions

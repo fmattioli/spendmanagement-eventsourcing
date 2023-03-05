@@ -10,8 +10,8 @@ namespace Spents.EventSourcing.Kafka.Core.Handlers
     public class ReceiptCreatedEventHandler : IMessageHandler<ReceiptEvent<Receipt>>
     {
         private readonly ILogger log;
-        private readonly IReceiptEvents receiptCreatedEventRepository;
-        public ReceiptCreatedEventHandler(ILogger log, IReceiptEvents receiptCreatedEventRepository)
+        private readonly IReceiptEventsRepository receiptCreatedEventRepository;
+        public ReceiptCreatedEventHandler(ILogger log, IReceiptEventsRepository receiptCreatedEventRepository)
         {
             this.log = log;
             this.receiptCreatedEventRepository = receiptCreatedEventRepository;

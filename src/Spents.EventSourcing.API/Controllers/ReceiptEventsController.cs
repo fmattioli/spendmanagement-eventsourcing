@@ -7,8 +7,8 @@ namespace Spents.EventSourcing.API.Controllers
     [Route("api/events")]
     public class ReceiptEventsController : Controller
     {
-        private readonly IReceiptEvents receiptCreatedEventRepository;
-        public ReceiptEventsController(IReceiptEvents receiptCreatedEventRepository) => this.receiptCreatedEventRepository = receiptCreatedEventRepository;
+        private readonly IReceiptEventsRepository receiptCreatedEventRepository;
+        public ReceiptEventsController(IReceiptEventsRepository receiptCreatedEventRepository) => this.receiptCreatedEventRepository = receiptCreatedEventRepository;
 
         [HttpGet]
         [Route("/getAllReceiptEvents", Name = nameof(ReceiptEventsController.GetAllEvents))]

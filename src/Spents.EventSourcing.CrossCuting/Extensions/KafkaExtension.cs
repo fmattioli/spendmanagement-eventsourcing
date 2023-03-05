@@ -74,7 +74,7 @@ namespace Spents.EventSourcing.CrossCuting.Extensions
             builder.AddConsumer(
                 consumer => consumer
                      .Topics(Spents.Topics.KafkaTopics.Events.Receipt)
-                     .WithGroupId("ReceiptEvents")
+                     .WithGroupId("Receipt")
                      .WithName("Receipt-Events")
                      .WithBufferSize(settings.BufferSize)
                      .WithWorkersCount(settings.WorkerCount)

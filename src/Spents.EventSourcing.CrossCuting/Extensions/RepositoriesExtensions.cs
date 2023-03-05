@@ -8,7 +8,7 @@ namespace Spents.EventSourcing.CrossCuting.Extensions
     {
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            services.AddSingleton<IReceiptEvents, ReceiptEventsRepository>();
+            services.AddSingleton<IReceiptEventsRepository, ReceiptEventsRepository>();
             return services;
         }
     }

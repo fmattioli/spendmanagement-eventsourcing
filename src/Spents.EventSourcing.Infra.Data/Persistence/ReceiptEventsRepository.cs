@@ -5,7 +5,7 @@ using Spents.EventSourcing.Domain.Interfaces;
 
 namespace Spents.EventSourcing.Infra.Data.Persistence
 {
-    public class ReceiptEventsRepository : IReceiptEvents
+    public class ReceiptEventsRepository : IReceiptEventsRepository
     {
         private readonly IMongoCollection<ReceiptEvent<Receipt>> _receiptCollection;
         public ReceiptEventsRepository(IMongoDatabase database)
