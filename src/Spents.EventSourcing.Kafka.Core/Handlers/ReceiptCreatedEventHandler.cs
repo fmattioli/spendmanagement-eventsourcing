@@ -21,7 +21,7 @@ namespace Spents.EventSourcing.Kafka.Core.Handlers
         {
             if (message is not null)
             {
-                await receiptCreatedEventRepository.AddReceiptCreatedEvent(message);
+                await receiptCreatedEventRepository.AddReceiptCreatedEventAsync(message);
 
                 this.log.Information(
                     $"Kafka message received and processed.",

@@ -15,7 +15,7 @@ namespace Spents.EventSourcing.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetAllEvents([FromQuery] Guid receiptId) => Ok(await receiptCreatedEventRepository.GetAllEvents(receiptId));
+        public async Task<IActionResult> GetAllEvents([FromQuery] Guid receiptId) => Ok(await receiptCreatedEventRepository.GetAllEventsAsync(receiptId));
         
     }
 }

@@ -15,8 +15,6 @@ namespace Spents.EventSourcing.CrossCuting.Extensions
         {
             services.AddSingleton<IMongoClient>(sp =>
             {
-                var configuration = sp.GetService<IConfiguration>();
-                var options = sp.GetService<MongoSettings>();
                 BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
                 BsonDefaults.GuidRepresentationMode = GuidRepresentationMode.V3;
                 return new MongoClient(mongoSettings.ConnectionString);
