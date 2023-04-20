@@ -52,10 +52,10 @@ namespace Spents.EventSourcing.CrossCuting.Extensions
                     .WithBrokers(settings.Sasl_Brokers)
                     .WithSecurityInformation(si =>
                     {
-                        si.SecurityProtocol = KafkaFlow.Configuration.SecurityProtocol.SaslSsl;
+                        si.SecurityProtocol = SecurityProtocol.SaslSsl;
                         si.SaslUsername = settings.Sasl_UserName;
                         si.SaslPassword = settings.Sasl_Password;
-                        si.SaslMechanism = KafkaFlow.Configuration.SaslMechanism.Plain;
+                        si.SaslMechanism = SaslMechanism.Plain;
                         si.SslCaLocation = string.Empty;
                     });
             }
@@ -73,7 +73,7 @@ namespace Spents.EventSourcing.CrossCuting.Extensions
         {
             builder.AddConsumer(
                 consumer => consumer
-                     .Topics(Spents.Topics.KafkaTopics.Events.Receipt)
+                     .Topics(KafkaTopics.Events.ReceiptEvents)
                      .WithGroupId("Receipt")
                      .WithName("Receipt-Events")
                      .WithBufferSize(settings.BufferSize)
