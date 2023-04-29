@@ -3,6 +3,7 @@ An event-sourcing implementation that was created with the purpose for saved all
 
 # Related projects
 > https://github.com/fmattioli/spendmanagement-api <br/>
+> https://github.com/fmattioli/spendmanagement-eventhandler <br/>
 > https://github.com/fmattioli/spendmanagement-domain
 
 # Related packages
