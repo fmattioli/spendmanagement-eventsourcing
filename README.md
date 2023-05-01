@@ -7,7 +7,8 @@ An event-sourcing implementation that was created with the purpose for saved all
 > https://github.com/fmattioli/spendmanagement-eventhandler <br/>
 > https://github.com/fmattioli/spendmanagement-readmodel <br/>
 
+# How it works?
+![Alt text](src/SpendManagementDiagramFlow.jpg?raw=true "Title")
 
-# Related packages
-> https://github.com/fmattioli/spendmanagement-topics <br/>
-> https://github.com/fmattioli/spendmanagement-contracts <br/>
+# Essential to understand
+For security reasons, the appsettings files are not present on the projects. Therefore, if you wanna compile this project and execute the applications, please send me an e-mail felipe-mattioli98@hotmail.com. 
