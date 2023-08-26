@@ -1,14 +1,14 @@
 # spendmanagement-eventsourcing
-An event-sourcing implementation that was created with the purpose for saved all states of objects related to the context of the spendmanagement project.
+An event-sourcing implementation that was created with the purpose of saving all states of objects related to the context of the spendmanagement project.
 
 # Related projects
 > https://github.com/fmattioli/spendmanagement-apigateway <br/>
-> https://github.com/fmattioli/spendmanagement-api <br/>
 > https://github.com/fmattioli/spendmanagement-domain <br/>
 > https://github.com/fmattioli/spendmanagement-eventhandler <br/>
 > https://github.com/fmattioli/spendmanagement-readmodel <br/>
+> https://github.com/fmattioli/spendmanagement-indentity <br/>
 
-# How it works?
+# How does it work?
 ![Alt text](src/SpendManagementDiagramFlow.jpg?raw=true "Title")
 
 # Essential to understand
