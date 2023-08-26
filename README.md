@@ -6,7 +6,7 @@ An event-sourcing implementation that was created with the purpose of saving all
 > https://github.com/fmattioli/spendmanagement-domain <br/>
 > https://github.com/fmattioli/spendmanagement-eventhandler <br/>
 > https://github.com/fmattioli/spendmanagement-readmodel <br/>
-> https://github.com/fmattioli/spendmanagement-indentity <br/>
+> https://github.com/fmattioli/spendmanagement-identity <br/>
 
 # How does it work?
 ![Alt text](src/SpendManagementDiagramFlow.jpg?raw=true "Title")
